@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <title>
+            My Website
+        </title>
+
+    </head>
+    <body>
+        <h1>
+            Calculator
+        </h1>
+        <input type="number" id="num1" placeholder="Enter a number">
+        <input type="number" id="num2" placeholder="Enter a number">
+        <button id="add" onclick="add()">Add</button>
+        <p id="result" ></p>
+        <script>
+            function add(){
+            let b = document.getElementById("num2");
+            let a = document.getElementById("num1");
+            let c = document.getElementById("add");
+            c = a.value+b.value;
+            document.getElementById("result").innerHTML = c;
+            }
+        </script>
+    </body>
+</html>
