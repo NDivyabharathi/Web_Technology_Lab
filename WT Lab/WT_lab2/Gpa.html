@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>GPA Calculator</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f0f0f0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+            }
+
+            .container {
+                width: 100%;
+                max-width: 500px;
+                padding: 30px;
+                background-color: #fff;
+                border-radius: 12px;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            }
+
+            h1 {
+                text-align: center;
+                color: #333;
+                margin-bottom: 25px;
+            }
+
+            .input-group {
+                margin-bottom: 15px;
+            }
+
+            input[type="number"] {
+                width: 100%;
+                padding: 12px;
+                margin-bottom: 10px;
+                border: 1px solid #ddd;
+                border-radius: 6px;
+                box-sizing: border-box;
+                font-size: 16px;
+            }
+
+            input[type="number"]:focus {
+                outline: none;
+                border-color: #4CAF50;
+                box-shadow: 0 0 5px rgba(76, 175, 80, 0.2);
+            }
+
+            button {
+                width: 100%;
+                padding: 12px;
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 16px;
+                font-weight: bold;
+                transition: background-color 0.3s ease;
+            }
+
+            button:hover {
+                background-color: #45a049;
+            }
+
+            #result {
+                margin-top: 20px;
+                padding: 15px;
+                background-color: #f8f8f8;
+                border-radius: 6px;
+                text-align: center;
+                font-size: 18px;
+                font-weight: bold;
+            }
+
+            .error {
+                color: #d32f2f;
+                text-align: center;
+                margin-top: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>GPA Calculator</h1>
+            <div class="input-group">
+                <input type="number" id="mark1" placeholder="Enter Mark 1" min="0" max="100">
+                <input type="number" id="mark2" placeholder="Enter Mark 2" min="0" max="100">
+                <input type="number" id="mark3" placeholder="Enter Mark 3" min="0" max="100">
+                <input type="number" id="mark4" placeholder="Enter Mark 4" min="0" max="100">
+                <input type="number" id="mark5" placeholder="Enter Mark 5" min="0" max="100">
+            </div>
+            <button type="button" id="calculate">Calculate GPA</button>
+            <p id="result">Result</p>
+        </div>
+        <script>
+            document.getElementById("calculate").addEventListener("click", function() {
+                const marks = [];
+                let isValid = true;
+                let errorMessage = "";
+
+                // Collect and validate all marks
+                for (let i = 1; i <= 5; i++) {
+                    const mark = parseFloat(document.getElementById(`mark${i}`).value);
+                    
+                    if (isNaN(mark)) {
+                        errorMessage = "Please enter all marks";
+                        isValid = false;
+                        break;
+                    }
+                    
+                    if (mark < 0 || mark > 100) {
+                        errorMessage = "Marks should be between 0 and 100";
+                        isValid = false;
+                        break;
+                    }
+                    
+                    marks.push(mark);
+                }
+
+                const resultElement = document.getElementById("result");
+                
+                if (!isValid) {
+                    resultElement.textContent = errorMessage;
+                    resultElement.style.color = "#d32f2f";
+                    return;
+                }
+
+                // Calculate GPA (assuming 100-point scale to 4.0 GPA conversion)
+                const average = marks.reduce((a, b) => a + b) / marks.length;
+                let gpa = 0;
+
+                if (average >= 90) gpa = 9.0;
+                else if (average >= 80) gpa = 8.0;
+                else if (average >= 70) gpa = 7.0;
+                else if (average >= 60) gpa = 6.0;
+
+                resultElement.style.color = "#333";
+                resultElement.textContent = `Your GPA: ${gpa.toFixed(2)}`;
+            });
+        </script>
+    </body>
+</html>
