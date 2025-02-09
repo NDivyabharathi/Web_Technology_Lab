@@ -12,7 +12,6 @@
                 justify-content: center;
                 align-items: center;
                 height: 100vh;
-                margin: 0;
             }
 
             .container {
@@ -21,18 +20,16 @@
                 padding: 30px;
                 background-color: #fff;
                 border-radius: 12px;
-                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
             }
 
             h1 {
                 text-align: center;
                 color: #333;
-                margin-bottom: 25px;
+                margin-bottom: 20px;
             }
 
-            .input-group {
-                margin-bottom: 15px;
-            }
+        
 
             input[type="number"] {
                 width: 100%;
@@ -42,12 +39,6 @@
                 border-radius: 6px;
                 box-sizing: border-box;
                 font-size: 16px;
-            }
-
-            input[type="number"]:focus {
-                outline: none;
-                border-color: #4CAF50;
-                box-shadow: 0 0 5px rgba(76, 175, 80, 0.2);
             }
 
             button {
@@ -60,7 +51,7 @@
                 cursor: pointer;
                 font-size: 16px;
                 font-weight: bold;
-                transition: background-color 0.3s ease;
+                
             }
 
             button:hover {
@@ -88,17 +79,18 @@
         <div class="container">
             <h1>GPA Calculator</h1>
             <div class="input-group">
-                <input type="number" id="mark1" placeholder="Enter Mark 1" min="0" max="100">
-                <input type="number" id="mark2" placeholder="Enter Mark 2" min="0" max="100">
-                <input type="number" id="mark3" placeholder="Enter Mark 3" min="0" max="100">
-                <input type="number" id="mark4" placeholder="Enter Mark 4" min="0" max="100">
-                <input type="number" id="mark5" placeholder="Enter Mark 5" min="0" max="100">
+                <input type="number" id="mark1" placeholder="Enter Mark 1">
+                <input type="number" id="mark2" placeholder="Enter Mark 2">
+                <input type="number" id="mark3" placeholder="Enter Mark 3">
+                <input type="number" id="mark4" placeholder="Enter Mark 4" >
+                <input type="number" id="mark5" placeholder="Enter Mark 5">
             </div>
             <button type="button" id="calculate">Calculate GPA</button>
             <p id="result">Result</p>
         </div>
         <script>
-            document.getElementById("calculate").addEventListener("click", function() {
+            let calculate = document.getElementById("calculate").addEventListener("click", change);
+            function change(){  
                 const marks = [];
                 let isValid = true;
                 let errorMessage = "";
@@ -130,18 +122,17 @@
                     return;
                 }
 
-                // Calculate GPA (assuming 100-point scale to 4.0 GPA conversion)
-                const average = marks.reduce((a, b) => a + b) / marks.length;
-                let gpa = 0;
-
-                if (average >= 90) gpa = 9.0;
-                else if (average >= 80) gpa = 8.0;
-                else if (average >= 70) gpa = 7.0;
-                else if (average >= 60) gpa = 6.0;
+                // Calculate average and convert to 10-point scale
+                let average = 0;
+                for(let i=0;i<marks.length;i++){
+                    average += marks[i];
+                }
+                average = average/marks.length;
+                const gpa = (average / 10).toFixed(2);
 
                 resultElement.style.color = "#333";
-                resultElement.textContent = `Your GPA: ${gpa.toFixed(2)}`;
-            });
+                resultElement.textContent = `Your GPA: ${gpa} / 10`;
+            }
         </script>
     </body>
 </html>
